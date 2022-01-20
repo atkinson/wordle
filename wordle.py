@@ -2,9 +2,6 @@ import argparse
 
 from words import WORDS
 
-WORD_LENGTH = 5
-BAD_CHARS = ["'", "%"]
-
 parser = argparse.ArgumentParser(
     description="""Wordle helper. Enter chars to include and exclude. 
     example" `python ./wordle.py ins xsv`"""
@@ -21,14 +18,6 @@ parser.add_argument(
     type=str,
     help="chars to exclude",
 )
-
-
-def file_as_list(filename):
-    return open(filename, "r").read().splitlines()
-
-
-def filter_len(size, words):
-    return filter(lambda x: len(x) == size, words)
 
 
 def exclude_bad_chars(letters, words):
@@ -48,11 +37,8 @@ if __name__ == "__main__":
             filter_good_chars(
                 args.include,
                 exclude_bad_chars(
-                    args.exclude + BAD_CHARS,
-                    filter_len(
-                        WORD_LENGTH,
-                        WORDS,
-                    ),
+                    args.exclude,
+                    WORDS,
                 ),
             ),
         ),
